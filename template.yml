@@ -7,7 +7,7 @@ Resources:
       SecurityGroups:
         - !Ref InstanceSecurityGroup
       KeyName: key
-      ImageId: 'ami-00bf5f1c358708486'
+      ImageId: 'ami-0cff7528ff583bf9a'
       InstanceType: t2.micro
 
   InstanceSecurityGroup:
