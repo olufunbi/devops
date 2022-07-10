@@ -3,37 +3,37 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.3
 
 jobs:
-  create_infrastructure: 
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - checkout
-      - run:
-          name: Create Cloudformation Stack
-          command: |
-            aws cloudformation deploy \
-              --template-file template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-              --region us-east-1
-
-  # configure_infrastructure: 
+  # create_infrastructure: 
   #   docker:
-  #     - image: python:3.7-alpine3.11
+  #     - image: amazon/aws-cli
   #   steps:
   #     - checkout
-  #     - add_ssh_keys:
-  #         fingerprints: ["fc:8e:1a:d3:e0:46:c0:32:ef:3d:f4:7c:e9:7b:2e:cb"]
   #     - run:
-  #         name: Install Ansible
+  #         name: Create Cloudformation Stack
   #         command: |
-  #           apk add --update ansible
-  #     - run:
-  #         name: Run Playbook and Configure server
-  #         command: |
-  #           ansible-playbook -i inventory.txt main.yml
+  #           aws cloudformation deploy \
+  #             --template-file template.yml \
+  #             --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+  #             --region us-east-1
+
+  configure_infrastructure: 
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["fc:8e:1a:d3:e0:46:c0:32:ef:3d:f4:7c:e9:7b:2e:cb"]
+      - run:
+          name: Install Ansible
+          command: |
+            apk add --update ansible
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            ansible-playbook -i inventory.txt main.yml
 
 workflows:
   my_workflow:
     jobs:
-      - create_infrastructure
-      # - configure_infrastructure
+      # - create_infrastructure
+      - configure_infrastructure
