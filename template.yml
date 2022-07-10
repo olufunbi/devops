@@ -6,7 +6,7 @@ Resources:
     Properties:
       SecurityGroups:
         - !Ref InstanceSecurityGroup
-      KeyName: key
+      KeyName: udacity
       ImageId: 'ami-08d4ac5b634553e16'
       InstanceType: t2.micro
 
